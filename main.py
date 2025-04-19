@@ -63,6 +63,8 @@ def main():
     if df is not None:
       debits_df = df[df["Debit/Credit"] == "Debit"]
       credits_df = df[df["Debit/Credit"] == "Credit"]
+      
+      st.session_state.debits_df = debits_df.copy()
       tab1, tab2 = st.tabs(["Expenses (Debits)", "Payment (Credits)"])
       with tab1:
         new_category = st.text_input("New Category Name")
@@ -74,7 +76,10 @@ def main():
           save_categories()
           st.rerun
           
-        st.write(debits_df)
+        st.subheader("Your Expenses")
+        edited_df = st.data_editor(
+          st.session_state.debits_df[["Date","Details","Amount","Category"]],
+        )
       with tab2:
         st.write(credits_df)
 main()
