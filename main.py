@@ -79,7 +79,24 @@ def main():
         st.subheader("Your Expenses")
         edited_df = st.data_editor(
           st.session_state.debits_df[["Date","Details","Amount","Category"]],
+          column_config = {
+            "Date":st.column_config.DateColumn(
+              format = "DD MMM YYYY"
+            ),
+            "Amount":st.column_config.NumberColumn(
+              "Amount",format = "%.2f AED"
+            ),
+            "Category":st.column_config.SelectboxColumn(
+              "Category", 
+              options = list(st.session_state.categories.keys())
+            )
+          },
+          hide_index = True,
+          use_conatiner_width = True,
+          key = "category_editor"
+          
         )
+        save_button = st.button("Save Changes")
       with tab2:
         st.write(credits_df)
 main()
