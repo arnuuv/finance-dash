@@ -81,7 +81,7 @@ def main():
           st.session_state.debits_df[["Date","Details","Amount","Category"]],
           column_config = {
             "Date":st.column_config.DateColumn(
-              format = "DD MMM YYYY"
+              "Date",format = "DD MMM YYYY"
             ),
             "Amount":st.column_config.NumberColumn(
               "Amount",format = "%.2f AED"
@@ -92,11 +92,22 @@ def main():
             )
           },
           hide_index = True,
-          use_conatiner_width = True,
+          use_container_width = True,
           key = "category_editor"
-          
         )
-        save_button = st.button("Save Changes")
+        save_button = st.button("Apply Changes",type = "primary")
+        if save_button:
+          for idx, row in edited_df.iterrows():
+            if row["Category"] != st.session_state.debits_df.at[idx,"Category"]:
+              continue
+            details = row["Details"]
+            new_category = row["Category"]
+            if new_category != st.session_state.debits_df.at[idx,"Category"]:
+              continue
+            details = row["Details"]
+            st.session_state.debits_df.at[idx,"Category"] = new_category
+            add_keyword_to_category(new_category,details)
+            
       with tab2:
         st.write(credits_df)
 main()
