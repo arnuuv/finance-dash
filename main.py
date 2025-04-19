@@ -24,4 +24,12 @@ def main():
   uploaded_file = st.file_uploader("Upload your transaction CSV file", type = ["csv"])
   if uploaded_file is not None:
     df = load_transactions(uploaded_file)
+    if df is not None:
+      debits_df = df[df["Debit/Credit"] == "Debit"]
+      credits_df = df[df["Debit/Credit"] == "Credit"]
+      tab1, tab2 = st.tabs(["Expenses (Debits)", "Payment (Credits)"])
+      with tab1:
+        st.write(debits_df)
+      with tab2:
+        st.write(credits_df)
 main()
