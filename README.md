@@ -2,8 +2,6 @@
 
 A personal finance dashboard built with Streamlit that helps you categorize and visualize your transaction data.
 
-![Finance Dashboard](https://example.com/finance-dash-screenshot.png)
-
 ## Live Demo
 
 Try it out: [Finance Dash Live Demo](https://finance-dash.streamlit.app/)
