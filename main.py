@@ -11,7 +11,8 @@ category_file = "categories.json"
 #creating categories
 if "categories" not in st.session_state:
   st.session_state.categories = {
-    "Uncategorized":[]
+    "Uncategorized":[],
+
   }
 
 if os.path.exists(category_file):
@@ -44,6 +45,16 @@ def main():
       credits_df = df[df["Debit/Credit"] == "Credit"]
       tab1, tab2 = st.tabs(["Expenses (Debits)", "Payment (Credits)"])
       with tab1:
+        new_category = st.text_input("New Category Name")
+        add_button = st.button("Add Category")
+        
+      if add_button and new_category:
+        if new_category not in st.session_state.categories:
+          st.session_state.categories[new_category] = []
+          save_categories()
+          st.success(f"Added a new category: {new_category}")
+          st.rerun
+          
         st.write(debits_df)
       with tab2:
         st.write(credits_df)
